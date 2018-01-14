@@ -11,6 +11,7 @@
 
 package org.usfirst.frc.team4546.robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -36,10 +38,14 @@ public class Robot extends IterativeRobot {
 	
 	private static final int kPDP = 0;
 	private PowerDistributionPanel m_pdp;
-	private static final int kJoystickPort = 1;
+	private static final int kJoystickPort = 0;
 	private Joystick m_joystick;
+	private XboxController m_xboxcontroller;
 	private static final int kMotorPort = 0;
 	private SpeedController m_motor;
+	private static final int kkMotorPort = 5;
+	private SpeedController h_motor;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -55,8 +61,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("PDP Voltage", m_pdp);
 		
 		m_joystick = new Joystick(kJoystickPort);
+		m_xboxcontroller = new XboxController(kJoystickPort);
 		m_motor = new Talon(kMotorPort);
 		m_motor.setInverted(true);
+		h_motor = new Talon(kkMotorPort);
+		h_motor.setInverted(true);
 
 	}
 
@@ -100,13 +109,19 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		m_motor.set(m_joystick.getY());
-		
-		
+		h_motor.set(m_xboxcontroller.getY(Hand.kLeft));
+		m_motor.set(m_xboxcontroller.getY(Hand.kRight));
+		if(m_xboxcontroller.getYButton()==true){
+			
+			//   ^   use this for inputs of buttons
+			
+			System.out.println("hi");
+		}
+	
+		 	
 		
 	}
 	
-
 	/**
 	 * This function is called periodically during test mode.
 	 */
