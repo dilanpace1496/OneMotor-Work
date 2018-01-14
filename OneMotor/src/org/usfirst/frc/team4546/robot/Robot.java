@@ -66,6 +66,8 @@ public class Robot extends IterativeRobot {
 		m_motor.setInverted(true);
 		h_motor = new Talon(kkMotorPort);
 		h_motor.setInverted(true);
+		
+		//creates motor port
 
 	}
 
@@ -110,7 +112,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		h_motor.set(m_xboxcontroller.getY(Hand.kLeft));
-		m_motor.set(m_xboxcontroller.getY(Hand.kRight));
+		m_motor.set(m_xboxcontroller.getY(Hand.kRight)*-1);
+			
+			// joysticks for drive contol
+		
 		if(m_xboxcontroller.getYButton()==true){
 			
 			//   ^   use this for inputs of buttons
